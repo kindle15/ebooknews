@@ -1,0 +1,16 @@
+
+docker-compose.yml
+
+# Build artefacts
+build/*
+
+# Data resources
+data/*
+
+# Config directory
+**/config/keys/*
+**/config/log/*
+**/config/cache/*
+
+!makefile
+!dockerfile
