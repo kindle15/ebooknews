@@ -1,0 +1,24 @@
+#!/usr/bin/with-contenv bash
+
+echo "Start simple loop process..."
+
+if [ -z "$PUID" ]; then
+    echo ".. unkown environment PUID"
+    while true; do
+        exec tail -f /dev/null
+    done
+elif [ "$PUID" == "911" ]; then
+    echo ".. by user: $PUID"
+    while true; do
+        exec tail -f /dev/naull
+    done
+else
+    echo ".. by user under S6: $PUID"
+    while true; do
+        s6-setuidgid actor tail -f /dev/null
+    done
+fi
+
+exit # This may never run. Why is it here then? It's pretty.
+     # Kind of like, "The End" at the end of a movie that you
+     # already know is over. It's always nice.

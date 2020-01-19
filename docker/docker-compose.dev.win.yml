@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  calibre_tool:
+    image: brutus/calibre
+    container_name: calibre_tools
+    restart: always
+    environment:
+      TZ: Europe/Berlin
+      #PUID: $UID
+      #PGID: $GID
+    volumes:
+      - "C:/Projects/HomeWork/Docker/calibre4news/docker/target:/target:rw"
+      - "C:/Projects/HomeWork/Docker/calibre4news/data/target:/target:rw"
+      - "C:/Projects/HomeWork/Docker/calibre4news/data/config:/config:rw"

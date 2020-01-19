@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  calibre_tools:
+    image: brutus/calibre
+    container_name: calibre_tools
+    hostname: calibre_tools
+    restart: always
+    environment:
+      TZ: Europe/Berlin
+      PUID: 1026
+      PGID: 100
+    volumes:
+      - "/volume1/maintenance/docker/calibre/target:/target:rw"
+      - "/volume1/maintenance/docker/calibre/config:/config:rw"
+

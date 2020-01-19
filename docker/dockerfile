@@ -1,0 +1,38 @@
+# easily convert ebooks
+
+FROM debian:jessie-slim
+
+LABEL MAINTAINERS="brutus"
+
+ARG S6_OVERLEY_VERSION='v1.22.1.0'
+ARG S6_OVERLAY_TYPE='amd64'
+# ARG S6_OVERLAY_FILE='https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLEY_VERSION}/s6-overlay-${S6_OVERLAY_TYPE}.tar.gz'
+ARG S6_OVERLAY_FILE='https://github.com/just-containers/s6-overlay/releases/download/v1.22.1.0/s6-overlay-amd64.tar.gz'
+
+RUN apt update \
+  && echo "Install calibre tools" \
+  && apt -y install \
+      curl \
+      calibre \
+      imagemagick \
+  && echo "Install s6 overlay" \
+  && curl -fsSL -o /tmp/s6-overlay.tar.gz -L ${S6_OVERLAY_FILE} \
+  && tar xfz /tmp/s6-overlay.tar.gz -C / \
+  && echo "Create actor user and make project folders" \
+  && groupmod -g 1000 users \
+  && useradd -u 911 -U -d /actor -s /bin/false actor \
+  && usermod -G users actor \
+  && mkdir -p \
+  /actor \
+  /target \
+  && echo "Cleanup" \
+  && rm -rf /tmp/*
+
+# add local files
+COPY root-init/ /
+
+VOLUME ["/target"]
+WORKDIR /target
+
+ENTRYPOINT ["/init"]
+#ENTRYPOINT ["ebook-convert"]

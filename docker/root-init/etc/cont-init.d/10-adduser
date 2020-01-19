@@ -1,0 +1,22 @@
+#!/usr/bin/with-contenv bash
+
+PUID=${PUID:-911}
+PGID=${PGID:-911}
+
+groupmod -o -g "$PGID" actor
+usermod -o -u "$PUID" actor
+
+echo '
+-------------------------------------
+Development Environment
+-------------------------------------
+GID/UID
+-------------------------------------'
+echo "
+User uid:    $(id -u actor)
+User gid:    $(id -g actor)
+-------------------------------------
+"
+chown -R actor:actor \
+      /actor \
+      /target
