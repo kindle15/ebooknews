@@ -71,6 +71,9 @@ build: clean build_image
 	@cp -r ./docker/target ./build/.
 	@cp ./README.md ./build/.
 	@cp ./docker/docker-compose.prod.nas.yml ./build/.
+	@echo ""
+	@echo "ok" $(COLOR_OUTPUT)
+	@echo ""
 
 release: build
 	@echo "Collect artifacts for release"
@@ -81,6 +84,7 @@ release: build
 	@tar --format=gnu -czvf ./release/$(ARTEFACT_NAME).tar.gz ./build
 	@echo "Build release done. See ./release/$(ARTEFACT_NAME).tag.gz"
 	@echo ""
+	@echo "ok" $(COLOR_OUTPUT)
 	@echo ""
 
 deploy:	
@@ -94,5 +98,8 @@ deploy:
 	@echo "Execute  : rainer@192.168.1.18:/volume1/maintenance/docker/calibre/releases/install_$(ARTEFACT_NAME).sh"
 	@ssh rainer@192.168.1.18 /volume1/maintenance/docker/calibre/releases/install_$(ARTEFACT_NAME).sh
 	@echo "deploy done"
+	@echo ""
+	@echo "ok" $(COLOR_OUTPUT)
+	@echo ""
 
 # EOF
