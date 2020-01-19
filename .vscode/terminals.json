@@ -1,0 +1,46 @@
+{
+  "autorun": false,
+  "terminals": [
+    {
+      "name": "Docker remove container",
+      "open": true,
+      "focus": true,
+      "onlySingle": true,
+      "command": "docker ps -aq | % { docker rm $_ }"
+    },
+    {
+      "name": "Docker remove '<none>' images",
+      "open": true,
+      "focus": true,
+      "onlySingle": true,
+      "command": "docker images --filter dangling=true | ConvertFrom-String | where {$_.P2 -eq \"<none>\"} | % { docker rmi $_.P3 }"
+    },
+    {
+      "name": "Docker Terminal",
+      "open": true,
+      "focus": true,
+      "commands": [
+        "cd c:\\Projects\\HomeWork\\Docker\\homemedia",
+        "docker images",
+        "docker ps -a"
+      ]
+    },
+    {
+      "name": "Project Terminal",
+      "open": true,
+      "focus": true,
+      "commands": [
+        "cd c:\\Projects\\HomeWork\\Docker\\homemedia"
+      ]
+    },
+    {
+      "name": "Git Bash Terminal",
+      "open": true,
+      "focus": true,
+      "commands": [
+        "cd c:\\Projects\\HomeWork\\Docker\\homemedia",
+        "\"C:\\Program Files\\Git\\bin\\bash.exe\""
+      ]
+    }
+  ]
+}
