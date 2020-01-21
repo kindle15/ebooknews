@@ -46,6 +46,10 @@ CLEAN_FILES 		:=   \
 					$(wildcard ./release/*)
 
 ARTEFACT_NAME 	:= calibre-tools-$(shell printf "%s%s" `cat ./version.raw` `git rev-parse --short HEAD`)
+REMOTE_ADDR     := bilbo_deploy # defined in .ssh/config
+REMOTE_SERVICE	:= services/ebooknews
+REMOTE_TARGET		:= bilbo_deploy:services/ebooknews
+#REMOTE_TARGET		:= $(shell echo "$(REMOTE_ADDR)$:$(REMOTE_SERVICE)")
 
 help:
 	-@echo "Makefile with following options (make <option>):"
@@ -90,13 +94,13 @@ release: build
 deploy:	
 	@echo "Deploy to remote service"
 	@echo "From: ./release/$(ARTEFACT_NAME).tar.gz"
-	@echo "To  : rainer@192.168.1.18:/volume1/maintenance/docker/calibre/releases"
-	@scp ./release/$(ARTEFACT_NAME).tar.gz rainer@192.168.1.18:/volume1/maintenance/docker/calibre/releases
+	@echo "To  : $(REMOTE_TARGET)/releases"
+	@scp ./release/$(ARTEFACT_NAME).tar.gz $(REMOTE_TARGET)/releases
 	@echo "From: ./build/scripts/install_$(ARTEFACT_NAME).sh"
-	@echo "To  : rainer@192.168.1.18:/volume1/maintenance/docker/calibre/releases"
-	@scp ./build/scripts/install_$(ARTEFACT_NAME).sh rainer@192.168.1.18:/volume1/maintenance/docker/calibre/releases
-	@echo "Execute  : rainer@192.168.1.18:/volume1/maintenance/docker/calibre/releases/install_$(ARTEFACT_NAME).sh"
-	@ssh rainer@192.168.1.18 /volume1/maintenance/docker/calibre/releases/install_$(ARTEFACT_NAME).sh
+	@echo "To  : $(REMOTE_TARGET)/releases"
+	@scp ./build/scripts/install_$(ARTEFACT_NAME).sh $(REMOTE_TARGET)/releases
+	@echo "Execute  : ssh $(REMOTE_ADDR) $(REMOTE_SERVICE)/releases/install_$(ARTEFACT_NAME).sh"
+	@ssh $(REMOTE_ADDR) $(REMOTE_SERVICE)/releases/install_$(ARTEFACT_NAME).sh
 	@echo "deploy done"
 	@echo ""
 	@echo "ok" $(COLOR_OUTPUT)
